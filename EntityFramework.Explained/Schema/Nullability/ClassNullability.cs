@@ -30,7 +30,6 @@ public class ClassNullability
         var sql = context.Database.GenerateCreateScript();
         var reader = LinesReader.FromText(sql);
 
-        reader.AsAssertsToLogFile();
         Assert.Contains("[NullThingId] int NULL", reader.SkipToLineContaining("NullThingId"));
 
     }
@@ -42,7 +41,6 @@ public class ClassNullability
         using var context = new TestSqlServerContext<Thing>();
         var sql = context.Database.GenerateCreateScript();
         var reader = LinesReader.FromText(sql);
-
 
         Assert.Contains("[SomeThingId] int NOT NULL", reader.SkipToLineContaining("SomeThingId"));
     }
