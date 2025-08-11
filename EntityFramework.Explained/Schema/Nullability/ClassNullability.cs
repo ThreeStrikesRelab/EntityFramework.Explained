@@ -23,7 +23,7 @@ public class ClassNullability
 
     [Fact]
     [DocHeader("Sql Server")]
-    [DocContent("`ThingTwo` Generates `NULL`.")]
+    [DocContent("`NullThing` Generates `NULL`.")]
     public void SqlServer_IsNull()
     {
         using var context = new TestSqlServerContext<Thing>();
@@ -35,7 +35,7 @@ public class ClassNullability
     }
 
     [Fact]
-    [DocContent("`ThingTwo` Generates `NOT NULL`.")]
+    [DocContent("`SomeThing` Generates `NOT NULL`.")]
     public void SqlServer_IsNotNull()
     {
         using var context = new TestSqlServerContext<Thing>();
@@ -48,7 +48,7 @@ public class ClassNullability
 
     [Fact]
     [DocHeader("Sq Lite")]
-    [DocContent("`ThingTwo` Generates `NULL`.")]
+    [DocContent("`NullThing` Generates `NULL`.")]
     public void Sqlite_IsNull()
     {
         using var context = new TestSqliteContext<Thing>();
@@ -59,7 +59,7 @@ public class ClassNullability
     }
 
     [Fact]
-    [DocContent("`ThingTwo` Generates `NOT NULL`.")]
+    [DocContent("`SomeThing` Generates `NOT NULL`.")]
     public void Sqlite_IsNotNull()
     {
         using var context = new TestSqliteContext<Thing>();
