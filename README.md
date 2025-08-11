@@ -28,6 +28,11 @@ entityTypeBuilder.Property(c => c.StringListProperty)
     .Metadata.SetValueComparer(comparer);
 ```
 ## Schema
+### Data Annotations
+#### Sql Server - data annotations
+looking for differences when using data annotations
+#### Sqlite - data annotations
+looking for differences when using data annotations
 ### Default String Length
 #### Sql Server
 Generates `nvarchar(max)`.
