@@ -67,6 +67,7 @@ public class ClassNullability
         Assert.DoesNotContain("ON DELETE CASCADE", reader.SkipToLineContaining("FK_Items_ThingTwo_NullThingId"));
     }
 
+    // SQLite
     [Fact]
     [DocHeader("Sq Lite")]
     [DocContent("`NullThing` Generates `NULL`.")]
@@ -88,5 +89,27 @@ public class ClassNullability
         var reader = LinesReader.FromText(sql);
 
         Assert.Contains("\"SomeThingId\" INTEGER NOT NULL", reader.SkipToLineContaining("SomeThingId"));
+    }
+
+        [Fact]
+    [DocContent("`SomeThingId` have parameter in the foreign key definition")]
+    public void Sqlite_ForeignKeyParameter()
+    {
+        using var context = new TestSqliteContext<Thing>();
+        var sql = context.Database.GenerateCreateScript();
+        var reader = LinesReader.FromText(sql);
+
+        Assert.Contains("ON DELETE CASCADE", reader.SkipToLineContaining("FK_Items_ThingTwo_SomeThingId"));
+    }
+
+    [Fact]
+    [DocContent("`NullThing` don't have parameter in the foreign key definition")]
+    public void Saqlite_ForeignKeyNoParameter()
+    {
+        using var context = new TestSqliteContext<Thing>();
+        var sql = context.Database.GenerateCreateScript();
+        var reader = LinesReader.FromText(sql);
+
+        Assert.DoesNotContain("ON DELETE CASCADE", reader.SkipToLineContaining("FK_Items_ThingTwo_NullThingId"));
     }
 }
