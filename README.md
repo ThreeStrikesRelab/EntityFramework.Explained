@@ -1,6 +1,8 @@
 # EntityFramework.Explained
-> Because We Need to Talk About Kevin.  
-
+> Because We Need to Talk About Kevin.
+#### Dependencies
+* [QuickPulse.Explains](https://github.com/kilfour/QuickPulse.Explains)
+* [QuickPulse.Show](https://github.com/kilfour/QuickPulse.Show)
 ## Runtime Behaviour
 ### List Properties
 EF Core does not detect in-place mutations to, for instance, a `List<string>` when only a value converter is used. The property reference remains unchanged, so change tracking is not triggered and `SaveChanges()` persists nothing.  
@@ -33,13 +35,6 @@ entityTypeBuilder.Property(c => c.StringListProperty)
 Generates `nvarchar(max)`.
 #### Sqlite
 Generates `TEXT`.
-### Class Nullability
-#### Sql Server
-`NullThing` Generates `NULL`.
-`SomeThing` Generates `NOT NULL`.
-#### Sq Lite
-`NullThing` Generates `NULL`.
-`SomeThing` Generates `NOT NULL`.
 ### String Nullability
 #### Sql Server
 `string` Generates `NOT NULL`.
