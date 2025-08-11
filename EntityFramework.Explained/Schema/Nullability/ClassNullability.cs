@@ -92,7 +92,7 @@ public class ClassNullability
     }
 
         [Fact]
-    [DocContent("`SomeThingId` have parameter in the foreign key definition")]
+    [DocContent("`SomeThingId` adds `ON DELETE CASCADE` to the foreign key definition")]
     public void Sqlite_ForeignKeyParameter()
     {
         using var context = new TestSqliteContext<Thing>();
@@ -103,7 +103,7 @@ public class ClassNullability
     }
 
     [Fact]
-    [DocContent("`NullThing` don't have parameter in the foreign key definition")]
+    [DocContent("`NullThing` does not add `ON DELETE CASCADE` to the foreign key definition")]
     public void Saqlite_ForeignKeyNoParameter()
     {
         using var context = new TestSqliteContext<Thing>();
