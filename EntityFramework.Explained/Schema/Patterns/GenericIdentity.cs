@@ -15,6 +15,7 @@ public class GenericIdentity
     {
         public override string ToString() => $"{typeof(T).Name}: {Value}";
     }
+    
     public class Thing
     {
         public Id<Thing> Id { get; set; }
@@ -24,7 +25,7 @@ public class GenericIdentity
 
     [Fact]
     [DocHeader("Sql Server - Generic Identity")]
-    [DocContent("looking what schema does for Generic Identity without mapping")]
+    [DocContent("Using a Generic Identity without mapping it in DbContext throws an `InvalidOperationException`.")]
     public void SqlServer()
     {
         using var context = new TestSqlServerContext<Thing>();
@@ -34,7 +35,7 @@ public class GenericIdentity
 
     [Fact]
     [DocHeader("Sqlite - Generic Identity")]
-    [DocContent("looking what schema does for Generic Identity without mapping")]
+    [DocContent("Same behaviour as Sql Server")]
     public void Sqlite()
     {
         using var context = new TestSqliteContext<Thing>();
@@ -42,17 +43,13 @@ public class GenericIdentity
         Assert.Contains("The entity type 'Id<Thing>' requires a primary key to be defined.", ex.Message);
     }
 
-
-
-
-
-
-    //Generated the GenericAppDbContext using AI
     public class GenericAppDbContextSQLserver<T> : DbContext where T : class
     {
         public DbSet<Thing> Things { get; set; } = default!;
+        
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlServer("DoesNotMatter"); // Required by EF, never actually used
+            => optionsBuilder.UseSqlServer("DoesNotMatter"); // Required by EF, never actually used
+        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // ValueConverter from Id<Thing> <-> Guid
