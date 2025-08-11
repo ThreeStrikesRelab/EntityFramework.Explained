@@ -30,6 +30,7 @@ public class ClassNullability
         var sql = context.Database.GenerateCreateScript();
         var reader = LinesReader.FromText(sql);
 
+        reader.AsAssertsToLogFile();
         Assert.Contains("[NullThingId] int NULL", reader.SkipToLineContaining("NullThingId"));
 
     }
@@ -44,6 +45,28 @@ public class ClassNullability
 
 
         Assert.Contains("[SomeThingId] int NOT NULL", reader.SkipToLineContaining("SomeThingId"));
+    }
+
+    [Fact]
+    [DocContent("`SomeThingId` have parameter in the foreign key definition")]
+    public void SqlServer_ForeignKeyParameter()
+    {
+        using var context = new TestSqlServerContext<Thing>();
+        var sql = context.Database.GenerateCreateScript();
+        var reader = LinesReader.FromText(sql);
+
+        Assert.Contains("ON DELETE CASCADE", reader.SkipToLineContaining("FK_Items_ThingTwo_SomeThingId"));
+    }
+
+    [Fact]
+    [DocContent("`NullThing` don't have parameter in the foreign key definition")]
+    public void SaqlServer_ForeignKeyNoParameter()
+    {
+        using var context = new TestSqlServerContext<Thing>();
+        var sql = context.Database.GenerateCreateScript();
+        var reader = LinesReader.FromText(sql);
+
+        Assert.DoesNotContain("ON DELETE CASCADE", reader.SkipToLineContaining("FK_Items_ThingTwo_NullThingId"));
     }
 
     [Fact]
