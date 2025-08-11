@@ -48,7 +48,7 @@ public class ClassNullability
 
     [Fact]
     [DocHeader("Sq Lite")]
-    [DocContent("`ThingTwo` Generates `NOT NULL`.")]
+    [DocContent("`ThingTwo` Generates `NULL`.")]
     public void Sqlite_IsNull()
     {
         using var context = new TestSqliteContext<Thing>();
@@ -59,7 +59,7 @@ public class ClassNullability
     }
 
     [Fact]
-    [DocContent("`ThingTwo` Generates `NULL`.")]
+    [DocContent("`ThingTwo` Generates `NOT NULL`.")]
     public void Sqlite_IsNotNull()
     {
         using var context = new TestSqliteContext<Thing>();
