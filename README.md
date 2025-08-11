@@ -39,9 +39,26 @@ Generates `TEXT`.
 #### Sql Server
 `NullThing` Generates `NULL`.
 `SomeThing` Generates `NOT NULL`.
+<<<<<<< HEAD
 #### Sq Lite
 `NullThing` Generates `NULL`.
 `SomeThing` Generates `NOT NULL`.
+=======
+`SomeThingId` adds `ON DELETE CASCADE` to the foreign key definition
+`NullThing` does not add `ON DELETE CASCADE` to the foreign key definition
+#### Sq Lite
+`NullThing` Generates `NULL`.
+`SomeThing` Generates `NOT NULL`.
+`SomeThingId` have parameter in the foreign key definition
+`NullThing` don't have parameter in the foreign key definition
+### Int Nullability
+#### Sql Server
+`int` Generates `int NOT NULL`.
+`int?` Generates `int NULL`.
+#### Sqlite
+`int` Generates `INTEGER NOT NULL`.
+`int?` Generates `INTEGER NULL`
+>>>>>>> e63269a (updated readme.md)
 ### String Nullability
 #### Sql Server
 `string` Generates `NOT NULL`.
