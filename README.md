@@ -38,6 +38,15 @@ looking for differences when using data annotations
 Generates `nvarchar(max)`.
 #### Sqlite
 Generates `TEXT`.
+### Generic Identity
+#### Sql Server - Generic Identity
+looking what schema does for Generic Identity without mapping
+#### Sqlite - Generic Identity
+looking what schema does for Generic Identity without mapping
+#### Sql Server - Generic Identity
+looking what schema does for Generic Identity with mapping
+#### Sqlite - Generic Identity
+looking what schema does for Generic Identity with mapping
 ### String Nullability
 #### Sql Server
 `string` Generates `NOT NULL`.
