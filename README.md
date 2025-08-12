@@ -35,6 +35,11 @@ entityTypeBuilder.Property(c => c.StringListProperty)
 Generates `nvarchar(max)`.
 #### Sqlite
 Generates `TEXT`.
+### Table Per Hierarchy
+#### Sql Server
+has tph with AnimalType as discriminator and inherited properties of base class and properties of derived classes.
+#### Sqlite
+has tph with AnimalType as discriminator and inherited properties of base class and properties of derived classes
 ### Class Nullability
 #### Sql Server
 `NullThing` Generates `NULL`.
@@ -44,8 +49,8 @@ Generates `TEXT`.
 #### Sq Lite
 `NullThing` Generates `NULL`.
 `SomeThing` Generates `NOT NULL`.
-`SomeThingId` have parameter in the foreign key definition
-`NullThing` don't have parameter in the foreign key definition
+`SomeThingId` adds `ON DELETE CASCADE` to the foreign key definition
+`NullThing` does not add `ON DELETE CASCADE` to the foreign key definition
 ### Int Nullability
 #### Sql Server
 `int` Generates `int NOT NULL`.
@@ -53,7 +58,6 @@ Generates `TEXT`.
 #### Sqlite
 `int` Generates `INTEGER NOT NULL`.
 `int?` Generates `INTEGER NULL`
->>>>>>> e63269a (updated readme.md)
 ### String Nullability
 #### Sql Server
 `string` Generates `NOT NULL`.

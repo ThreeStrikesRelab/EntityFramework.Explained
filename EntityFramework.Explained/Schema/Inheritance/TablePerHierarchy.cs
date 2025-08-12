@@ -34,7 +34,7 @@ public class TablePerHierarchy
     public class Animal
     {
         public int Id { get; set; }
-        public bool isPet { get; set; }
+        public string isPet { get; set; }
     }
 
     public class Cat : Animal
@@ -50,12 +50,18 @@ public class TablePerHierarchy
     [Fact]
     [DocHeader("Sql Server")]
     [DocContent("has tph with AnimalType as discriminator and inherited properties of base class and properties of derived classes.")]
+    [DocSnippet("Property with type bool will generate an int in the database in SQL Server (output 0 or 1). So we used type string instead.")]
     public void SqlServer()
     {
         using var context = new AnimalDbContext<Animal>();
         var sql = context.Database.GenerateCreateScript();
         var reader = LinesReader.FromText(sql);
-        Assert.Contains("[StringProperty] nvarchar(max) NOT NULL", reader.SkipToLineContaining("StringProperty"));
+
+        Assert.Equal("    \"Id\" INTEGER NOT NULL CONSTRAINT \"PK_Animals\" PRIMARY KEY AUTOINCREMENT,", reader.SkipToLineContaining("Id"));
+        Assert.Equal("    \"isPet\" TEXT NOT NULL,", reader.NextLine());
+        Assert.Equal("    \"AnimalType\" TEXT NOT NULL,", reader.NextLine());
+        Assert.Equal("    \"numberOfBarks\" INTEGER NULL,", reader.NextLine());
+        Assert.Equal("    \"numberOfMeows\" INTEGER NULL", reader.NextLine());
     }
 
     [Fact]
@@ -66,6 +72,11 @@ public class TablePerHierarchy
         using var context = new AnimalDbContext<Animal>();
         var sql = context.Database.GenerateCreateScript();
         var reader = LinesReader.FromText(sql);
-        Assert.Contains("\"StringProperty\" TEXT NOT NULL", reader.SkipToLineContaining("StringProperty"));
+
+        Assert.Equal("    \"Id\" INTEGER NOT NULL CONSTRAINT \"PK_Animals\" PRIMARY KEY AUTOINCREMENT,", reader.SkipToLineContaining("Id"));
+        Assert.Equal("    \"isPet\" TEXT NOT NULL,", reader.NextLine());
+        Assert.Equal("    \"AnimalType\" TEXT NOT NULL,", reader.NextLine());
+        Assert.Equal("    \"numberOfBarks\" INTEGER NULL,", reader.NextLine());
+        Assert.Equal("    \"numberOfMeows\" INTEGER NULL", reader.NextLine());
     }
 }
