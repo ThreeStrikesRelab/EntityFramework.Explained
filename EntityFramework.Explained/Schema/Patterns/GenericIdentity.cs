@@ -16,6 +16,7 @@ public class GenericIdentity
     {
         public override string ToString() => $"{typeof(T).Name}: {Value}";
     }
+
     public class Thing
     {
         public Id<Thing> Id { get; set; }
@@ -25,7 +26,7 @@ public class GenericIdentity
 
     [Fact]
     [DocHeader("Sql Server - Generic Identity")]
-    [DocContent("looking what schema does for Generic Identity without mapping")]
+    [DocContent("Using a Generic Identity without mapping it in DbContext throws an `InvalidOperationException`.")]
     public void SqlServer()
     {
         using var context = new TestSqlServerContext<Thing>();
@@ -35,7 +36,7 @@ public class GenericIdentity
 
     [Fact]
     [DocHeader("Sqlite - Generic Identity")]
-    [DocContent("looking what schema does for Generic Identity without mapping")]
+    [DocContent("Same behaviour as Sql Server")]
     public void Sqlite()
     {
         using var context = new TestSqliteContext<Thing>();
