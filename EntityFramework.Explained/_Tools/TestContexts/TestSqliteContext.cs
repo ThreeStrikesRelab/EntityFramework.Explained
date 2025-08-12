@@ -8,4 +8,5 @@ public class TestSqliteContext<T> : DbContext where T : class
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.UseSqlite("DoesNotMatter"); // Required by EF, never actually used
+
 }
