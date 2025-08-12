@@ -19,12 +19,12 @@
 1. **Fork** de hoofrepo op GitHub.
 2. **Clone** je fork:
    ```bash
-   git clone https://github.com/<jouw-account>/<repo>.git
+   git clone https://github.com/<jouw-account>/EntityFramework.Explained.git
    cd <repo>
    ```
 3. **Koppel upstream** (éénmalig):
    ```bash
-   git remote add upstream https://github.com/<organisatie>/<repo>.git
+   git remote add upstream https://github.com/ThreeStrikesRelab/EntityFramework.Explained.git
    git fetch upstream
    ```
 4. **Sync met upstream/main** (regelmatig):
