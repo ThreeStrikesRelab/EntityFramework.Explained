@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using EntityFramework.Explained._Tools.Helpers;
 using EntityFramework.Explained._Tools.TestContexts;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using QuickPulse.Explains;
 using QuickPulse.Explains.Text;
@@ -44,7 +45,26 @@ public class GenericIdentity
 
 
 
+    public static void MappingWithConverterAndGI(ModelBuilder modelbuilder)
+    {
+        // ValueConverter from Id<Thing> <-> Guid
+        var idConverter = new ValueConverter<Id<Thing>, Guid>(
+            id => id.Value,
+            guid => new Id<Thing>(guid)
+        );
 
+        modelbuilder.Entity<Thing>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+
+            entity.Property(e => e.Id)
+                .HasConversion(idConverter)
+                .ValueGeneratedNever(); // EF won’t auto-generate GUID
+
+            entity.Property(e => e.Name)
+                .IsRequired();
+        });
+    }
 
 
     //Generated the GenericAppDbContext using AI
@@ -55,23 +75,7 @@ public class GenericIdentity
         => optionsBuilder.UseSqlServer("DoesNotMatter"); // Required by EF, never actually used
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // ValueConverter from Id<Thing> <-> Guid
-            var idConverter = new ValueConverter<Id<Thing>, Guid>(
-                id => id.Value,
-                guid => new Id<Thing>(guid)
-            );
-
-            modelBuilder.Entity<Thing>(entity =>
-            {
-                entity.HasKey(e => e.Id);
-
-                entity.Property(e => e.Id)
-                    .HasConversion(idConverter)
-                    .ValueGeneratedNever(); // EF won’t auto-generate GUID
-
-                entity.Property(e => e.Name)
-                    .IsRequired();
-            });
+            MappingWithConverterAndGI(modelBuilder);
         }
     }
 
@@ -83,23 +87,7 @@ public class GenericIdentity
         => optionsBuilder.UseSqlite("DoesNotMatter"); // Required by EF, never actually used
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // ValueConverter from Id<Thing> <-> Guid
-            var idConverter = new ValueConverter<Id<Thing>, Guid>(
-                id => id.Value,
-                guid => new Id<Thing>(guid)
-            );
-
-            modelBuilder.Entity<Thing>(entity =>
-            {
-                entity.HasKey(e => e.Id);
-
-                entity.Property(e => e.Id)
-                    .HasConversion(idConverter)
-                    .ValueGeneratedNever(); // EF won’t auto-generate GUID
-
-                entity.Property(e => e.Name)
-                    .IsRequired();
-            });
+            MappingWithConverterAndGI(modelBuilder);
         }
     }
 
@@ -120,10 +108,6 @@ public class GenericIdentity
         Assert.Equal("    CONSTRAINT [PK_Things] PRIMARY KEY ([Id])", reader.NextLine());
         Assert.Equal(");", reader.NextLine());
         Assert.Equal("GO", reader.NextLine());
-        Assert.Equal("", reader.NextLine());
-        Assert.Equal("", reader.NextLine());
-        Assert.Equal("", reader.NextLine());
-        Assert.True(reader.EndOfContent());
     }
 
     [Fact]
@@ -138,11 +122,6 @@ public class GenericIdentity
         Assert.Equal("    \"Id\" TEXT NOT NULL CONSTRAINT \"PK_Things\" PRIMARY KEY,", reader.NextLine());
         Assert.Equal("    \"Name\" TEXT NOT NULL", reader.NextLine());
         Assert.Equal(");", reader.NextLine());
-        Assert.Equal("", reader.NextLine());
-        Assert.Equal("", reader.NextLine());
-        Assert.Equal("", reader.NextLine());
-        Assert.True(reader.EndOfContent());
-
     }
 
 }

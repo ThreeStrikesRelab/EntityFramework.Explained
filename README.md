@@ -28,11 +28,6 @@ entityTypeBuilder.Property(c => c.StringListProperty)
     .Metadata.SetValueComparer(comparer);
 ```
 ## Schema
-### Data Annotations
-#### Sql Server - data annotations
-looking for differences when using data annotations
-#### Sqlite - data annotations
-looking for differences when using data annotations
 ### Default String Length
 #### Sql Server
 Generates `nvarchar(max)`.
@@ -54,12 +49,6 @@ looking what schema does for Generic Identity with mapping
 #### Sqlite
 `string` Generates `NOT NULL`.
 `string?` Generates `NULL`.
-### Bi Directional One To Many With Two Db Sets
-Because the entity used in the `DbSet` has a collection of another entity type, the latter are mapped as well.
-#### Sql Server - bidirectional
-EF infers and includes related entities in bidirectional relationship in the schema even when only one side is explicitly registered in the `DbContext`.
-#### Sqlite - bidirectional
-Same behavior as SqlServer with bidirectional relationship, relationship discovery pulls in the `Blog` entity despite only registering `Post`
 ### Uni Directional One To Many With One Db Set
 Because the entity used in the `DbSet` has a collection of another entity type, the latter are mapped as well.
 #### Sql Server
