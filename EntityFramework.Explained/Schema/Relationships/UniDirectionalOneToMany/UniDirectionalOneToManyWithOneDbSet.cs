@@ -26,7 +26,7 @@ public class UniDirectionalOneToManyWithOneDbSet
     }
 
     [Fact]
-    [DocContent("When using the following simple model of *one* `Blog` containing *many* `Posts`:")]
+    [DocContent("When using the following simple model of *one* `Blog` containing *many* `Posts`: ")]
     [DocCodeExample(typeof(Blog))]
     [DocCodeExample(typeof(Post))]
     [DocContent("And then adding a `DbSet<Blog>` to the `DbContext` EF generates the following ddl for Sql Server:  \n")]
