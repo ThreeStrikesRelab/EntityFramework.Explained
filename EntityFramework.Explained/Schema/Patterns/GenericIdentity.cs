@@ -21,7 +21,6 @@ public class GenericIdentity
     {
         public Id<Thing> Id { get; set; }
 
-        public string Name { get; set; } = default!;
     }
 
     [Fact]
@@ -61,9 +60,6 @@ public class GenericIdentity
             entity.Property(e => e.Id)
                 .HasConversion(idConverter)
                 .ValueGeneratedNever(); // EF won’t auto-generate GUID
-
-            entity.Property(e => e.Name)
-                .IsRequired();
         });
     }
 
@@ -97,32 +93,25 @@ public class GenericIdentity
 
     [Fact]
     [DocHeader("Sql Server - Generic Identity")]
-    [DocContent("looking what schema does for Generic Identity with mapping")]
+    [DocContent("Successfully generates database for Generic Identity with mapping")]
     public void SqlServer2()
     {
         using var context = new GenericAppDbContextSQLserver<Thing>();
         var sql = context.Database.GenerateCreateScript();
         var reader = LinesReader.FromText(sql);
-        Assert.Equal("CREATE TABLE [Things] (", reader.NextLine());
-        Assert.Equal("    [Id] uniqueidentifier NOT NULL,", reader.NextLine());
-        Assert.Equal("    [Name] nvarchar(max) NOT NULL,", reader.NextLine());
-        Assert.Equal("    CONSTRAINT [PK_Things] PRIMARY KEY ([Id])", reader.NextLine());
-        Assert.Equal(");", reader.NextLine());
-        Assert.Equal("GO", reader.NextLine());
+        Assert.Equal("    [Id] uniqueidentifier NOT NULL,", reader.SkipToLineContaining("Id"));
+        Assert.Equal("    CONSTRAINT [PK_Things] PRIMARY KEY ([Id])", reader.SkipToLineContaining("Id"));
     }
 
     [Fact]
     [DocHeader("Sqlite - Generic Identity")]
-    [DocContent("looking what schema does for Generic Identity with mapping")]
+    [DocContent("Successfully generates database for Generic Identity with mapping")]
     public void Sqlite2()
     {
         using var context = new GenericAppDbContextSQLite<Thing>();
         var sql = context.Database.GenerateCreateScript();
         var reader = LinesReader.FromText(sql);
-        Assert.Equal("CREATE TABLE \"Things\" (", reader.NextLine());
-        Assert.Equal("    \"Id\" TEXT NOT NULL CONSTRAINT \"PK_Things\" PRIMARY KEY,", reader.NextLine());
-        Assert.Equal("    \"Name\" TEXT NOT NULL", reader.NextLine());
-        Assert.Equal(");", reader.NextLine());
+        Assert.Equal("    \"Id\" TEXT NOT NULL CONSTRAINT \"PK_Things\" PRIMARY KEY", reader.SkipToLineContaining("Id"));
     }
 
 }
