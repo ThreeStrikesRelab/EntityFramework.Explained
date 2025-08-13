@@ -8,7 +8,7 @@ namespace EntityFramework.Explained.Schema.Conventions;
 [DocFile]
 [DocFileHeader("Inheritance:`Table per type`")]
 [DocContent("**If base class is made and derived classes too, table per type is generated like this:**")]
-[DocExample(typeof(AnimalServerDbContext<Animal>))]
+[DocExample(typeof(AnimalServerDbContext<>))]
 public class TablePerType
 {
     public class Animal

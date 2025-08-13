@@ -36,6 +36,6 @@ CREATE TABLE [Posts] (
 ```
 **Index:**
 ```sql
- CREATE INDEX [IX_Posts_BlogId] ON [Posts] ([BlogId]);;
+ CREATE INDEX [IX_Posts_BlogId] ON [Posts] ([BlogId]);
 ```
 *Note:* No other mappings were added.

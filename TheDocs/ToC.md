@@ -8,6 +8,7 @@
     - [Identity Strategy](Schema/Conventions/IdentityStrategy.md)
     - [Required Attributes](Schema/Conventions/RequiredAttributes.md)
     - [Table Per Hierarchy](Schema/Conventions/TablePerHierarchy.md)
+    - [Inheritance:`Table per type`](Schema/Conventions/TablePerType.md)
     - [Unique Constraints](Schema/Conventions/UniqueConstraints.md)
     - [Class Nullability](Schema/Nullability/ClassNullability.md)
     - [Int Nullability](Schema/Nullability/IntNullability.md)
