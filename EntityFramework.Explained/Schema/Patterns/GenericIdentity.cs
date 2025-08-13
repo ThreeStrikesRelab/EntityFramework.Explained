@@ -1,13 +1,10 @@
-using System.ComponentModel.DataAnnotations;
-using EntityFramework.Explained._Tools.Helpers;
 using EntityFramework.Explained._Tools.TestContexts;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using QuickPulse.Explains;
 using QuickPulse.Explains.Text;
 
-namespace EntityFramework.Explained.Schema.Conventions;
+namespace EntityFramework.Explained.Schema.Patterns;
 
 [DocFile]
 public class GenericIdentity

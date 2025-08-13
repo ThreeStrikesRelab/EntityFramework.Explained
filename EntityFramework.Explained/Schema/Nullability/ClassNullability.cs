@@ -1,4 +1,3 @@
-using EntityFramework.Explained._Tools.Helpers;
 using EntityFramework.Explained._Tools.TestContexts;
 using Microsoft.EntityFrameworkCore;
 using QuickPulse.Explains;
@@ -91,7 +90,7 @@ public class ClassNullability
         Assert.Contains("\"SomeThingId\" INTEGER NOT NULL", reader.SkipToLineContaining("SomeThingId"));
     }
 
-        [Fact]
+    [Fact]
     [DocContent("`SomeThingId` adds `ON DELETE CASCADE` to the foreign key definition")]
     public void Sqlite_ForeignKeyParameter()
     {

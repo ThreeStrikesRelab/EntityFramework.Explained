@@ -3,7 +3,7 @@ using QuickPulse.Explains;
 using QuickPulse.Explains.Text;
 
 
-namespace EntityFramework.Explained.Schema.Conventions;
+namespace EntityFramework.Explained.Schema.Inheritance;
 
 [DocFile]
 [DocFileHeader("Inheritance:`Table per type`")]

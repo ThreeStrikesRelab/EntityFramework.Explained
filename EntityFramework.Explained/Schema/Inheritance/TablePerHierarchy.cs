@@ -1,10 +1,9 @@
 using System.ComponentModel.DataAnnotations;
-using EntityFramework.Explained._Tools.Helpers;
 using Microsoft.EntityFrameworkCore;
 using QuickPulse.Explains;
 using QuickPulse.Explains.Text;
 
-namespace EntityFramework.Explained.Schema.Conventions;
+namespace EntityFramework.Explained.Schema.Inheritance;
 
 [DocFile]
 public class TablePerHierarchy
