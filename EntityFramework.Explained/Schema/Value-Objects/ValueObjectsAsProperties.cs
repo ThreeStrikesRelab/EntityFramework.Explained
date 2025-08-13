@@ -11,85 +11,48 @@ public class ValueObjectProperties
     // Value Object: CustomerName
     public class CustomerName
     {
-        public string FirstName { get; private set; }
-        public string LastName { get; private set; }
+        public string FullName { get; private set; }
 
         private CustomerName() { }
-        public CustomerName(string firstName, string lastName)
+        public CustomerName(string fullname)
         {
-            if (string.IsNullOrWhiteSpace(firstName)) throw new ArgumentException("First name is required");
-            if (string.IsNullOrWhiteSpace(lastName)) throw new ArgumentException("Last name is required");
-
-            FirstName = firstName;
-            LastName = lastName;
+            FullName = fullname;
         }
 
         // Equality methods omitted for brevity
     }
 
     // Value Object: Address
-    public class Address
+    public class Customer
     {
-        public string Street { get; private set; }
-        public string City { get; private set; }
-        public string PostalCode { get; private set; }
+        public int Id { get; set; }
 
-        private Address() { }
-        public Address(string street, string city, string postalCode)
+        public CustomerName Name { get; set; }
+
+        public Customer() { }
+
+        public Customer(int id, CustomerName name)
         {
-            Street = street;
-            City = city;
-            PostalCode = postalCode;
+            Id = id;
+            Name = name;
         }
-
-        // Equality methods omitted for brevity
     }
-
-    // Aggregate Root: Order
-    public class Order
-    {
-        public int Id { get; private set; }
-        public CustomerName CustomerName { get; private set; }
-        public Address ShippingAddress { get; private set; }
-        public DateTime OrderDate { get; private set; }
-
-        private Order() { }
-        public Order(CustomerName customerName, Address shippingAddress)
-        {
-            CustomerName = customerName;
-            ShippingAddress = shippingAddress;
-            OrderDate = DateTime.UtcNow;
-        }
-
-        // Other domain logic here...
-    }
-
-
-
 
     public class AppDbContext : DbContext
     {
-        public DbSet<Order> Orders { get; set; }
+        public DbSet<Customer> Customers { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.UseSqlServer("DoesNotMatter"); // Required by EF, never actually used
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Order>(order =>
+            modelBuilder.Entity<Customer>(customer =>
             {
-                order.HasKey(o => o.Id);
+                customer.HasKey(o => o.Id);
 
-                order.OwnsOne(o => o.CustomerName, cn =>
+                customer.OwnsOne(o => o.Name, cn =>
                 {
-                    cn.Property(c => c.FirstName).HasColumnName("CustomerFirstName").IsRequired();
-                    cn.Property(c => c.LastName).HasColumnName("CustomerLastName").IsRequired();
-                });
-
-                order.OwnsOne(o => o.ShippingAddress, addr =>
-                {
-                    addr.Property(a => a.Street).HasColumnName("Street").IsRequired();
-                    addr.Property(a => a.City).HasColumnName("City").IsRequired();
-                    addr.Property(a => a.PostalCode).HasColumnName("PostalCode").IsRequired();
+                    cn.Property(c => c.FullName).HasColumnName("CustomerFullName").IsRequired();
                 });
             });
         }
@@ -104,16 +67,9 @@ public class ValueObjectProperties
         using var context = new AppDbContext();
         var sql = context.Database.GenerateCreateScript();
         var reader = LinesReader.FromText(sql);
-        Assert.Equal("CREATE TABLE [Orders] (", reader.NextLine());
+        Assert.Equal("CREATE TABLE [Customers] (", reader.NextLine());
         Assert.Equal("    [Id] int NOT NULL IDENTITY,", reader.NextLine());
-        Assert.Equal("    [CustomerFirstName] nvarchar(max) NOT NULL,", reader.NextLine());
-        Assert.Equal("    [CustomerLastName] nvarchar(max) NOT NULL,", reader.NextLine());
-        Assert.Equal("    [Street] nvarchar(max) NOT NULL,", reader.NextLine());
-        Assert.Equal("    [City] nvarchar(max) NOT NULL,", reader.NextLine());
-        Assert.Equal("    [PostalCode] nvarchar(max) NOT NULL,", reader.NextLine());
-        Assert.Equal("    [OrderDate] datetime2 NOT NULL,", reader.NextLine());
-        Assert.Equal("    CONSTRAINT [PK_Orders] PRIMARY KEY ([Id])", reader.NextLine());
-        Assert.Equal(");", reader.NextLine());
-        Assert.Equal("GO", reader.NextLine());
+        Assert.Equal("    [CustomerFullName] nvarchar(max) NOT NULL,", reader.NextLine());
+        Assert.Equal("    CONSTRAINT [PK_Customers] PRIMARY KEY ([Id])", reader.NextLine());
     }
 }
