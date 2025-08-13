@@ -1,5 +1,5 @@
 # Inheritance:`Table per type`
-**If base class is made and derived classes too, table per type is generated like this:**
+**If base class is made and derived classes too, table per type is generated like this:**  
 ```csharp
 public class AnimalServerDbContext<T> : DbContext where T : class
 {
@@ -17,6 +17,6 @@ public class AnimalServerDbContext<T> : DbContext where T : class
 }
 ```
 ## Sql Server
-Sql Server creates tables for the base AND derived classes using the ToTable() method. The tables are 1:1 related with each other with the property Id. UseTptMappingStrategy() is recommended by Microsoft but this doesn't work here.
+Sql Server creates tables for the base AND derived classes using the ToTable() method. The tables are 1:1 related with each other with the property Id. UseTptMappingStrategy() is recommended by Microsoft but this doesn't work here.  
 ## Sqlite
-Sqlite creates tables for the base AND derived classes (=tpt) using the ToTable() method. The tables are 1:1 related with each other with the property Id. UseTptMappingStrategy() is not compatible with Sqlite. It will only create one table of the base class.
+Sqlite creates tables for the base AND derived classes (=tpt) using the ToTable() method. The tables are 1:1 related with each other with the property Id. UseTptMappingStrategy() is not compatible with Sqlite. It will only create one table of the base class.  

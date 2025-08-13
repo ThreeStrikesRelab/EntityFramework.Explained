@@ -1,5 +1,5 @@
 # Data Annotations: `[Range(...)]`
-**Given:**
+**Given:**  
 ```csharp
 public class Thing
 {
@@ -9,6 +9,6 @@ public class Thing
 }
 ```
 ## Sql Server
-`[Range(0,10)]` gets ignored : `[SecondInt] int NOT NULL`.
+`[Range(0,10)]` gets ignored : `[SecondInt] int NOT NULL`.  
 ## Sqlite
-Same behaviour as Sql Server: `"SecondInt" INTEGER NOT NULL`.
+Same behaviour as Sql Server: `"SecondInt" INTEGER NOT NULL`.  
