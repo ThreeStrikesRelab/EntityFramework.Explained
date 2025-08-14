@@ -1,8 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using EntityFramework.Explained._Tools.TestContexts;
-using Microsoft.EntityFrameworkCore;
 using QuickPulse.Explains;
-using QuickPulse.Explains.Text;
 
 namespace EntityFramework.Explained.Schema.Conventions;
 
@@ -10,7 +8,7 @@ namespace EntityFramework.Explained.Schema.Conventions;
 [DocFileHeader("Data Annotations: `[Range(...)]`")]
 [DocContent("**Given:**")]
 [DocExample(typeof(Thing))]
-public class DataAnnotations
+public class DataAnnotations : SchemaPreTestBase
 {
     [CodeExample]
     public class Thing
@@ -18,12 +16,6 @@ public class DataAnnotations
         public int Id { get; set; }
         [Range(0, 10)] // <= We are checking this 
         public int SecondInt { get; set; }
-    }
-
-    private LinesReader GetReader(DbContext context)
-    {
-        var sql = context.Database.GenerateCreateScript();
-        return LinesReader.FromText(sql);
     }
 
     [Fact]
