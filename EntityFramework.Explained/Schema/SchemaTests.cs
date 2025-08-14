@@ -18,6 +18,7 @@ namespace EntityFramework.Explained.Schema
     }
 }
 
+// Used GEMINI for explanation and translation
 /*
     Here is a succinct explanation of the class definition and its method:
 
