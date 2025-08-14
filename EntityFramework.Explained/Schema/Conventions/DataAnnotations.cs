@@ -7,7 +7,7 @@ namespace EntityFramework.Explained.Schema.Conventions;
 [DocFile]
 [DocFileHeader("Data Annotations: `[Range(...)]`")]
 [DocContent("**Given:**")]
-[DocExample(typeof(Thing))]
+[DocCodeExample(typeof(Thing))]
 public class DataAnnotations : SchemaPreTestBase
 {
     [CodeExample]
