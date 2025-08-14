@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+
 using EntityFramework.Explained._Tools.TestContexts;
 using QuickPulse.Explains;
 
