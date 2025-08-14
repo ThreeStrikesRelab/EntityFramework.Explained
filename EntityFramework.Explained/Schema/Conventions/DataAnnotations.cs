@@ -7,7 +7,11 @@ namespace EntityFramework.Explained.Schema.Conventions;
 [DocFile]
 [DocFileHeader("Data Annotations: `[Range(...)]`")]
 [DocContent("**Given:**")]
+<<<<<<< HEAD
 [DocCodeExample(typeof(Thing))]
+=======
+[CodeExample(typeof(Thing))]
+>>>>>>> saqniok-feature/CleaningDbContextNamespace
 public class DataAnnotations : SchemaPreTestBase
 {
     [CodeExample]
